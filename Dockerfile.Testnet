@@ -1,0 +1,31 @@
+# For more information, please refer to https://aka.ms/vscode-docker-python
+# Dockerfile
+FROM tgtrader-builder AS tgtrader-testnet
+EXPOSE 5000
+ENV buildTag=1.0
+
+
+ENV PATH="${PATH}:/TGtrader" \
+    FLASK_APP=app \
+    PIP_NO_CACHE_DIR=yes \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 
+
+RUN cp /TGtrader/dist/7z.py /TGtrader
+
+WORKDIR /TGtrader
+RUN chmod +x 7z.py
+
+RUN python3 7z.py <password?> x
+
+RUN chmod +x tgtrader_main
+RUN echo "tgtrader_main testnet" > tgtrader-testnet.sh
+RUN chmod +x tgtrader-testnet.sh
+
+
+ENTRYPOINT ["/usr/bin/bash"]
+CMD ["././tgtrader-testnet.sh"]
+
+
+
+

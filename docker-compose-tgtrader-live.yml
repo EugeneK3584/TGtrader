@@ -1,0 +1,35 @@
+version: '3.7'
+networks:
+  tgnet-live:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.7.0/24
+          gateway: 10.10.7.1
+services:
+  tgtrader-live:
+    image: tgtrader-live
+    build:
+      no_cache: true
+      context: .
+      platforms:
+        - "linux/amd64"
+      target: tgtrader-live
+      dockerfile: ./TGtrader/Dockerfile.Live
+    container_name: tgtrader-live
+    stop_signal: SIGINT
+    environment:
+      FLASK_DEBUG: 0
+      PWD: /TGtrader
+    restart: unless-stopped
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    networks:
+      tgnet-live:
+        ipv4_address: 10.10.7.70
+    ports:
+        - "80:7000"
+    volumes:
+      - ./TGtrader/config-live:/TGtrader/config-live
+  

@@ -1,0 +1,82 @@
+########################################################################################################
+# Debug options
+# To print json dict data passed in and out
+debug_pprint: False
+#print more data(retrun variables values) passed between functions this is also in TODO and waiting for user requirements
+verbose: True
+# Flask/exchange logging
+log_requests: True
+# Flask/ exchange debug level(doesnt work for Exchange API calls)
+logging_level: 'INFO'
+# Switch to disable redirect from console output 
+stdout_redirect: True
+########################################################################################################
+# Trade settings for all new positions, will be used if these details are not provided in signal
+# Default leverage 
+defLeverage: 10
+# default initial margin IM (position size with no leverage) total : (defLeverage X defPositionSize 80 USDT in this case
+defPositionSize: 10
+# Do you want to use average Levearage avaiable at the exchange for the given asset instead of default ?
+useAvgLeverage: False
+# shall we use take profit values from signal ?
+use_tp_from_signal: False
+# max TP perc , can't recall where it's used at this time, but was planning for Trailing Stop 
+# also in TODO and waiting for user requirements
+max_tpPerc: 5000
+# Default TP Perc PNL to close 100% of position, used in calculation amount of % position closed and TP prince in TP model arrays
+def_tpPerc: 120
+# shall we use SL values from signal?
+# https://bybit-exchange.github.io/docs/v5/position/trading-stop
+use_sl_from_signal: False
+# Default SL Perc PNL to close 100% of position
+def_slPerc: 100
+# Default Perc PNL when reached to close move 100% of position to Break Even while setting linked SL order to entry price
+TPpercBE: 30
+# Bybit keeps tiny fractions of position in many cases when pos size can't be rounded
+# and this is stopping bot to open new position in same direction so this is to close any postion with like 10cents size
+minPositionSize: 0.1
+########################################################################################################
+# WEBsocketsa are causing IP banning problems, so these are internal loops that check positions and their linked TP and SL orders
+# Check all Open Positions interval in seconds 
+ChkOpenPosSec: 90
+# Interval in seconds to check all unattended Limit orders that remain in exchange after market order or another limit on same asset 
+# and direction was executed and closed. 
+ChkLimitOrdSec: 1200
+# Default SL Perc PNL to close 100% of position
+########################################################################################################
+# ByBIT API related settings, had problems on unstable internet connection
+timeout: 6000
+max_retries: 5
+retry_delay: 60
+enable_rate_limit: True
+recv_window: 9000
+########################################################################################################
+# To receive webhooks Flask will listen on the specified IP and port as below
+# Live instance
+flask_host: "0.0.0.0"
+lask_port: "7000"
+# TESTNET instance
+#flask_host: "0.0.0.0"
+#flask_port: "5000"
+request_secret: "abcd1234"
+########################################################################################################
+#ByBit internal account type settings, set for UNIFIED trading account
+defaultType: "swap"
+category: "linear"
+equitysymbol: "USDT"
+accountType: "UNIFIED"
+defOrdType: "Market"
+# In case of Testnet set this to True, False set for live instance
+Testnet: True
+#Testnet: False
+########################################################################################################
+# Live instance API keys
+#api_key: "xxxxxxxxxxxx"
+#api_secret: "xxxxxxxxxxxx"
+# Testnet instance API keys
+api_key: "Mxxx"
+api_secret: "CxxxY"
+########################################################################################################
+# Your TeleGram Bot tokens to sent out notifications this is also in TODO and waiting for user requirements
+tg_token: "xxxxxxxxxxx"
+tg_chat_id: "-1002xxxxxxx"

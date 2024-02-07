@@ -1,0 +1,35 @@
+version: '3.7'
+networks:
+  tgnet-test:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.5.0/24
+          gateway: 10.10.5.1
+services:
+  tgtrader-testnet:
+    image: tgtrader-testnet
+    build:
+      no_cache: true
+      context: .
+      platforms:
+        - "linux/amd64"
+      target: tgtrader-testnet
+      dockerfile: ./TGtrader/Dockerfile.Testnet
+    container_name: tgtrader-testnet
+    stop_signal: SIGINT
+    environment:
+      FLASK_DEBUG: 0
+      PWD: /TGtrader
+    restart: unless-stopped
+    stdin_open: true # docker run -i
+    tty: true # docker run -t
+    networks:
+      tgnet-test:
+        ipv4_address: 10.10.5.50
+    ports:
+        - "80:5000"
+    volumes:
+      - ./TGtrader/config-testnet:/TGtrader/config-testnet
+  

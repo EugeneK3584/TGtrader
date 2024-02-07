@@ -1,0 +1,6 @@
+docker system prune --all --force
+
+docker-compose -f docker-compose-tgtrader-testnet.yml build --no-cache && \
+docker-compose -f docker-compose-tgtrader-testnet.yml up
+
+docker ps
